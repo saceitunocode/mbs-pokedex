@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MBS Pokédex 🎮
 
-## Getting Started
+MBS Pokédex es una aplicación web moderna y elegante construida con **Next.js** que permite a los usuarios explorar el vasto mundo de Pokémon de una manera intuitiva y visualmente atractiva.
 
-First, run the development server:
+Esta aplicación ha sido diseñada con una estética "Master Edition", priorizando la claridad, el diseño basado en tarjetas y una experiencia de usuario fluida.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Características Principales
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Cuadrícula de Pokémon**: Visualiza los Pokémon en una cuadrícula organizada de 3x10 por página.
+- **Paginación Inteligente**: Navega fácilmente a través de toda la lista de Pokémon.
+- **Detalles Completos**: Cada Pokémon tiene su propia página dedicada que incluye:
+  - Información técnica (ID, Altura, Peso).
+  - Tipos con colores representativos.
+  - Estadísticas base detalladas.
+  - **Línea Evolutiva**: Visualización gráfica de la cadena de evolución del Pokémon.
+- **Diseño Premium**: Interfaz limpia, responsiva y optimizada para una lectura agradable.
+- **Consumo de API**: Datos obtenidos en tiempo real desde la [PokéAPI](https://pokeapi.co/).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Tecnologías Utilizadas
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Sustrato core**: [Next.js 15+](https://nextjs.org/) (App Router)
+- **Lógica de UI**: [React 19](https://react.dev/)
+- **Estilos**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **Iconografía**: [Lucide React](https://lucide.dev/)
+- **Lenguaje**: [TypeScript](https://www.typescriptlang.org/)
 
-## Learn More
+## 🚀 Cómo Empezar
 
-To learn more about Next.js, take a look at the following resources:
+Para ejecutar este proyecto de forma local, sigue estos pasos:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Pre-requisitos
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Asegúrate de tener instalado [Node.js](https://nodejs.org/) (versión 18 o superior).
 
-## Deploy on Vercel
+### Instalación
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Clona el repositorio:
+   ```bash
+   git clone <url-del-repositorio>
+   cd mbs-pokedex
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. Instala las dependencias:
+   ```bash
+   npm install
+   ```
+
+3. Inicia el servidor de desarrollo:
+   ```bash
+   npm run dev
+   ```
+
+4. Abre tu navegador en [http://localhost:3000](http://localhost:3000) para ver el resultado.
+
+## 📁 Estructura del Proyecto
+
+- `app/`: Contiene las rutas y la lógica de las páginas (Next.js App Router).
+- `components/`: Componentes de UI reutilizables como `PokemonCard`, `EvolutionChainDisplay` y `PokemonStats`.
+- `lib/`: Utilidades y lógica para el consumo de la API.
+- `public/`: Archivos estáticos e imágenes.
+
+---
+*Desarrollado con ❤️ por el equipo de MBS.*
