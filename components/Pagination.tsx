@@ -62,8 +62,8 @@ export default function Pagination({ currentPage, totalPages, lang }: Pagination
         />
 
         {/* Page Numbers */}
-        <div className="hidden sm:flex items-center gap-2 px-4 border-x border-gray-100 mx-2">
-          {pages[0] > 1 && <span className="text-gray-400 px-2 text-sm">...</span>}
+        <div className="hidden sm:flex items-center gap-2 px-4 border-x border-gray-100 dark:border-gray-700 mx-2">
+          {pages[0] > 1 && <span className="text-gray-400 dark:text-gray-500 px-2 text-sm">...</span>}
           {pages.map((p) => (
             <Link
               key={p}
@@ -71,17 +71,17 @@ export default function Pagination({ currentPage, totalPages, lang }: Pagination
               className={`w-10 h-10 flex items-center justify-center rounded-xl font-bold transition-all ${
                 currentPage === p
                   ? 'bg-indigo-600 text-white shadow-md'
-                  : 'text-gray-500 hover:bg-gray-50'
+                  : 'text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700'
               }`}
             >
               {p}
             </Link>
           ))}
-          {pages[pages.length - 1] < totalPages && <span className="text-gray-400 px-2 text-sm">...</span>}
+          {pages[pages.length - 1] < totalPages && <span className="text-gray-400 dark:text-gray-500 px-2 text-sm">...</span>}
         </div>
 
         {/* Current Page Mobile */}
-        <div className="sm:hidden flex items-center justify-center w-12 h-10 bg-indigo-50 text-indigo-700 rounded-xl font-bold mx-2">
+        <div className="sm:hidden flex items-center justify-center w-12 h-10 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded-xl font-bold mx-2">
            {currentPage}
         </div>
 
@@ -126,7 +126,7 @@ function PaginationButton({
 }) {
   if (disabled) {
     return (
-      <div className="flex items-center gap-2 px-3 py-2 bg-gray-50 text-gray-300 rounded-xl cursor-not-allowed border border-gray-100 transition-colors">
+      <div className="flex items-center gap-2 px-3 py-2 bg-gray-50 dark:bg-gray-800/50 text-gray-300 dark:text-gray-600 rounded-xl cursor-not-allowed border border-gray-100 dark:border-gray-700 transition-colors">
         {iconPosition === 'left' && icon}
         <span className="text-xs font-bold uppercase hidden md:inline">{label}</span>
         {iconPosition === 'right' && icon}
@@ -137,7 +137,7 @@ function PaginationButton({
   return (
     <Link
       href={href}
-      className="flex items-center gap-2 px-3 py-2 bg-white text-gray-600 rounded-xl border border-gray-100 hover:border-indigo-200 hover:text-indigo-600 hover:bg-indigo-50 transition-all shadow-sm"
+      className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-xl border border-gray-100 dark:border-gray-700 hover:border-indigo-200 dark:hover:border-indigo-800 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-all shadow-sm"
     >
       {iconPosition === 'left' && icon}
       <span className="text-xs font-bold uppercase hidden md:inline">{label}</span>
