@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import { SearchBar } from './SearchBar';
+import { SearchBar } from '@/components/SearchBar';
 
 // Mock de next/navigation
 const mockPush = vi.fn();
