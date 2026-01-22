@@ -5,20 +5,22 @@ import { getLanguage, translations } from '@/lib/i18n';
 import LanguageSelector from '@/components/LanguageSelector';
 import Pagination from '@/components/Pagination';
 import { SearchBar } from '@/components/SearchBar';
+import { TypeFilter } from '@/components/TypeFilter';
 
 export default async function Home({
   searchParams,
 }: {
-  searchParams: { page?: string, q?: string };
+  searchParams: { page?: string, q?: string, type?: string };
 }) {
   const params = await searchParams;
   const page = Number(params?.page) || 1;
   const query = params?.q || '';
+  const type = params?.type || '';
   const limit = 30;
   const offset = (page - 1) * limit;
 
-  const { results: pokemonList, total } = query 
-    ? await searchPokemon(query, limit, offset)
+  const { results: pokemonList, total } = (query || type)
+    ? await searchPokemon(query, type, limit, offset)
     : await getPokemonList(limit, offset);
   
   const totalPages = Math.ceil(total / limit);
@@ -36,8 +38,13 @@ export default async function Home({
           <LanguageSelector currentLang={lang} />
         </div>
         
-        <div className="w-full">
-          <SearchBar placeholder={t.searchPlaceholder} />
+        <div className="flex flex-col sm:flex-row gap-4 w-full h-full items-start">
+          <div className="flex-[2] w-full">
+            <SearchBar placeholder={t.searchPlaceholder} />
+          </div>
+          <div className="flex-[1] w-full">
+            <TypeFilter lang={lang} />
+          </div>
         </div>
       </header>
 
