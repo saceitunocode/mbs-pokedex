@@ -17,7 +17,7 @@ export default async function Home({
   const page = Number(params?.page) || 1;
   const query = params?.q || '';
   const type = params?.type || '';
-  const limit = 30;
+  const limit = 27;
   const offset = (page - 1) * limit;
 
   const { results: pokemonList, total } = (query || type)
@@ -43,10 +43,10 @@ export default async function Home({
         </div>
         
         <div className="flex flex-col sm:flex-row gap-4 w-full h-full items-start">
-          <div className="flex-[2] w-full">
+          <div className="flex-2 w-full">
             <SearchBar placeholder={t.searchPlaceholder} />
           </div>
-          <div className="flex-[1] w-full">
+          <div className="flex-1 w-full">
             <TypeFilter lang={lang} />
           </div>
         </div>
@@ -68,8 +68,8 @@ export default async function Home({
           />
         </>
       ) : (
-        <div className="text-center py-20 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
-          <p className="text-xl text-gray-500 font-medium">
+        <div className="text-center py-20 bg-gray-50 dark:bg-gray-800 rounded-3xl border-2 border-dashed border-gray-200 dark:border-gray-700">
+          <p className="text-xl text-gray-500 dark:text-gray-400 font-medium">
             {query ? `${t.noResults} "${query}"` : t.noResults}
           </p>
         </div>

@@ -56,33 +56,26 @@ export function TypeFilter({ lang }: { lang: Language }) {
     <div className="relative w-full" ref={containerRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full pl-11 pr-4 h-[60px] bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all duration-300 flex items-center justify-between text-gray-700 dark:text-gray-200 font-medium group"
+        className="w-full pl-11 pr-4 min-h-[60px] py-1 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all duration-300 flex items-center justify-between text-gray-700 dark:text-gray-200 font-medium group"
         aria-label="Filter by type"
       >
         <div className="absolute left-4 text-gray-400 dark:text-gray-500 group-hover:text-blue-500 transition-colors duration-200">
           <Filter size={20} />
         </div>
         
-        <div className="flex flex-wrap gap-1.5 items-center mr-2 overflow-hidden">
+        <div className="flex flex-wrap gap-1.5 items-center mr-2 py-1">
           {selectedTypes.length > 0 ? (
-            <>
-              {selectedTypes.slice(0, 1).map(type => (
-                <span key={type} className={`px-2 py-0.5 rounded-full text-[9px] font-extrabold text-white uppercase tracking-wider ${TYPE_COLORS[type]} truncate max-w-[100px]`}>
-                  {t.types[type as keyof typeof t.types]}
-                </span>
-              ))}
-              {selectedTypes.length > 1 && (
-                <span className="text-[10px] text-gray-400 dark:text-gray-500 font-bold whitespace-nowrap">
-                  +{selectedTypes.length - 1}
-                </span>
-              )}
-            </>
+            selectedTypes.map(type => (
+              <span key={type} className={`px-2 py-0.5 rounded-full text-[9px] font-extrabold text-white uppercase tracking-wider ${TYPE_COLORS[type]} truncate max-w-[100px]`}>
+                {t.types[type as keyof typeof t.types]}
+              </span>
+            ))
           ) : (
             <span className="text-gray-500 dark:text-gray-400">{t.allTypes}</span>
           )}
         </div>
 
-        <ChevronDown size={20} className={`text-gray-400 dark:text-gray-500 transition-transform duration-200 flex-shrink-0 ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown size={20} className={`text-gray-400 dark:text-gray-500 transition-transform duration-200 shrink-0 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {isOpen && (
