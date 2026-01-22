@@ -1,6 +1,9 @@
+'use client';
+
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 import { Language, translations } from '@/lib/i18n';
+import { useSearchParams } from 'next/navigation';
 
 interface PaginationProps {
   currentPage: number;
@@ -10,6 +13,13 @@ interface PaginationProps {
 
 export default function Pagination({ currentPage, totalPages, lang }: PaginationProps) {
   const t = translations[lang];
+  const searchParams = useSearchParams();
+
+  const createPageUrl = (pageNumber: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('page', pageNumber.toString());
+    return `/?${params.toString()}`;
+  };
 
   const getPages = () => {
     const pages = [];
@@ -37,7 +47,7 @@ export default function Pagination({ currentPage, totalPages, lang }: Pagination
       <div className="flex items-center gap-2">
         {/* First Page */}
         <PaginationButton 
-          href={`/?page=1`} 
+          href={createPageUrl(1)} 
           disabled={currentPage === 1}
           icon={<ChevronsLeft size={18} />}
           label={t.first}
@@ -45,7 +55,7 @@ export default function Pagination({ currentPage, totalPages, lang }: Pagination
 
         {/* Previous Page */}
         <PaginationButton 
-          href={`/?page=${currentPage - 1}`} 
+          href={createPageUrl(currentPage - 1)} 
           disabled={currentPage === 1}
           icon={<ChevronLeft size={18} />}
           label={t.previous}
@@ -57,7 +67,7 @@ export default function Pagination({ currentPage, totalPages, lang }: Pagination
           {pages.map((p) => (
             <Link
               key={p}
-              href={`/?page=${p}`}
+              href={createPageUrl(p)}
               className={`w-10 h-10 flex items-center justify-center rounded-xl font-bold transition-all ${
                 currentPage === p
                   ? 'bg-indigo-600 text-white shadow-md'
@@ -77,7 +87,7 @@ export default function Pagination({ currentPage, totalPages, lang }: Pagination
 
         {/* Next Page */}
         <PaginationButton 
-          href={`/?page=${currentPage + 1}`} 
+          href={createPageUrl(currentPage + 1)} 
           disabled={currentPage === totalPages}
           icon={<ChevronRight size={18} />}
           label={t.next}
@@ -86,7 +96,7 @@ export default function Pagination({ currentPage, totalPages, lang }: Pagination
 
         {/* Last Page */}
         <PaginationButton 
-          href={`/?page=${totalPages}`} 
+          href={createPageUrl(totalPages)} 
           disabled={currentPage === totalPages}
           icon={<ChevronsRight size={18} />}
           label={t.last}
