@@ -30,7 +30,19 @@ export const translations = {
       ice: 'Ice', fighting: 'Fighting', poison: 'Poison', ground: 'Ground', flying: 'Flying',
       psychic: 'Psychic', bug: 'Bug', rock: 'Rock', ghost: 'Ghost', dragon: 'Dragon',
       steel: 'Steel', fairy: 'Fairy', dark: 'Dark',
-    }
+    },
+    allRegions: 'All Regions',
+    regions: {
+      kanto: 'Kanto',
+      johto: 'Johto',
+      hoenn: 'Hoenn',
+      sinnoh: 'Sinnoh',
+      unova: 'Unova',
+      kalos: 'Kalos',
+      alola: 'Alola',
+      galar: 'Galar',
+      paldea: 'Paldea'
+    },
   },
   es: {
     pokedex: 'Pokédex',
@@ -61,6 +73,18 @@ export const translations = {
       ice: 'Hielo', fighting: 'Lucha', poison: 'Veneno', ground: 'Tierra', flying: 'Volador',
       psychic: 'Psíquico', bug: 'Bicho', rock: 'Roca', ghost: 'Fantasma', dragon: 'Dragón',
       steel: 'Acero', fairy: 'Hada', dark: 'Siniestro',
+    },
+    allRegions: 'Todas las regiones',
+    regions: {
+      kanto: 'Kanto',
+      johto: 'Johto',
+      hoenn: 'Hoenn',
+      sinnoh: 'Sinnoh',
+      unova: 'Unova',
+      kalos: 'Kalos',
+      alola: 'Alola',
+      galar: 'Galar',
+      paldea: 'Paldea'
     }
   },
 };

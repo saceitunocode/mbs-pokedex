@@ -6,22 +6,28 @@ import LanguageSelector from '@/components/LanguageSelector';
 import Pagination from '@/components/Pagination';
 import { SearchBar } from '@/components/SearchBar';
 import { TypeFilter } from '@/components/TypeFilter';
+import { RegionFilter } from '@/components/RegionFilter';
 import ThemeSelector from '@/components/ThemeSelector';
+
+import { ITEMS_PER_PAGE } from '@/lib/constants';
 
 export default async function Home({
   searchParams,
 }: {
-  searchParams: { page?: string, q?: string, type?: string };
+  searchParams: { page?: string, q?: string, type?: string, region?: string };
 }) {
   const params = await searchParams;
   const page = Number(params?.page) || 1;
   const query = params?.q || '';
   const type = params?.type || '';
-  const limit = 27;
+  const region = params?.region || '';
+  const limit = ITEMS_PER_PAGE;
   const offset = (page - 1) * limit;
 
-  const { results: pokemonList, total } = (query || type)
-    ? await searchPokemon(query, type, limit, offset)
+  // Use searchPokemon if any filter (search, type, or region) is active to handle logic correctly
+  // getPokemonList is only for simple paginated access without filtering
+  const { results: pokemonList, total } = (query || type || region)
+    ? await searchPokemon(query, type, limit, offset, region)
     : await getPokemonList(limit, offset);
   
   const totalPages = Math.ceil(total / limit);
@@ -42,12 +48,15 @@ export default async function Home({
           </div>
         </div>
         
-        <div className="flex flex-col sm:flex-row gap-4 w-full h-full items-start">
-          <div className="flex-2 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 w-full h-full items-start">
+          <div className="w-full md:col-span-2">
             <SearchBar placeholder={t.searchPlaceholder} />
           </div>
-          <div className="flex-1 w-full">
+          <div className="w-full md:col-span-1">
             <TypeFilter lang={lang} />
+          </div>
+          <div className="w-full md:col-span-1">
+            <RegionFilter lang={lang} />
           </div>
         </div>
       </header>
