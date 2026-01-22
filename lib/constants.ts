@@ -16,6 +16,7 @@ export const TYPE_COLORS: Record<string, string> = {
   dragon: 'bg-violet-600',
   steel: 'bg-slate-500',
   fairy: 'bg-pink-400',
+  dark: 'bg-gray-700',
 };
 
 export const TYPE_HEXES: Record<string, string> = {
@@ -36,4 +37,5 @@ export const TYPE_HEXES: Record<string, string> = {
   dragon: '#7c3aed',
   steel: '#64748b',
   fairy: '#f472b6',
+  dark: '#374151',
 };

@@ -6,3 +6,9 @@ export function capitalize(str: string) {
 export function formatId(id: number) {
   return `#${id.toString().padStart(3, '0')}`;
 }
+
+export function getPokemonImage(pokemon: any) {
+  return pokemon.sprites.other?.['official-artwork']?.front_default || 
+         pokemon.sprites.front_default || 
+         null;
+}

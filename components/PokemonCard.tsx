@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Pokemon } from '@/lib/types';
-import { capitalize, formatId } from '@/lib/utils';
+import { capitalize, formatId, getPokemonImage } from '@/lib/utils';
 import { TYPE_COLORS } from '@/lib/constants';
 import { Language, translations } from '@/lib/i18n';
 
@@ -11,7 +11,7 @@ interface PokemonCardProps {
 }
 
 export default function PokemonCard({ pokemon, lang }: PokemonCardProps) {
-  const imageUrl = pokemon.sprites.other['official-artwork'].front_default;
+  const imageUrl = getPokemonImage(pokemon);
   const t = translations[lang];
 
   return (
@@ -21,8 +21,11 @@ export default function PokemonCard({ pokemon, lang }: PokemonCardProps) {
     >
       {/* Watermark ID - Large, centered behind image */}
       <div className="absolute inset-0 flex items-center justify-center select-none pointer-events-none z-0">
-        <span className="text-[10rem] font-black text-gray-100 opacity-60">
-          #{pokemon.id.toString().padStart(2, '0')}
+        <span 
+          className="font-black text-gray-100 opacity-60"
+          style={{ fontSize: `${Math.min(10, 35 / (formatId(pokemon.id).length + 1))}rem` }}
+        >
+          {formatId(pokemon.id)}
         </span>
       </div>
 

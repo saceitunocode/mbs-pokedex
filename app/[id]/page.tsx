@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { getPokemonDetail, getPokemonSpecies, getEvolutionChain } from '@/lib/pokeapi';
+import { getPokemonDetail, getPokemonSpecies, getEvolutionChain, getPokemonDetailWithFallback, getEnhancedEvolutionChain } from '@/lib/pokeapi';
 import PokemonStats from '@/components/PokemonStats';
 import EvolutionChainDisplay from '@/components/EvolutionChainDisplay';
 import { TYPE_COLORS, TYPE_HEXES } from '@/lib/constants';
-import { capitalize, formatId } from '@/lib/utils';
+import { capitalize, formatId, getPokemonImage } from '@/lib/utils';
 import { ChevronLeft } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
@@ -15,7 +15,7 @@ import LanguageSelector from '@/components/LanguageSelector';
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   const { id } = await params;
   try {
-    const pokemon = await getPokemonDetail(id);
+    const { pokemon } = await getPokemonDetailWithFallback(id);
     return {
       title: `${capitalize(pokemon.name)} | Pokedex MVP`,
       description: `Detailed stats and evolution chain for ${capitalize(pokemon.name)}.`,
@@ -40,9 +40,9 @@ export default async function PokemonDetail({
 
   // Parallel fetch for data
   try {
-      const pokemon = await getPokemonDetail(id);
-      const species = await getPokemonSpecies(id);
-      const evolution = await getEvolutionChain(species.evolution_chain.url);
+      const { pokemon, species } = await getPokemonDetailWithFallback(id);
+      const evolutionData = await getEvolutionChain(species.evolution_chain.url);
+      const enhancedEvolution = await getEnhancedEvolutionChain(evolutionData.chain);
 
       const description = (
           species.flavor_text_entries.find((entry) => entry.language.name === lang) ||
@@ -69,8 +69,8 @@ export default async function PokemonDetail({
                   className="absolute top-0 inset-x-0 h-1/2 opacity-30 z-0"
                   style={{
                       background: pokemon.types.length > 1
-                          ? `linear-gradient(135deg, ${TYPE_HEXES[pokemon.types[0].type.name]} 50%, ${TYPE_HEXES[pokemon.types[1].type.name]} 50%)`
-                          : TYPE_HEXES[pokemon.types[0].type.name]
+                          ? `linear-gradient(135deg, ${TYPE_HEXES[pokemon.types[0].type.name] || '#94a3b8'} 50%, ${TYPE_HEXES[pokemon.types[1].type.name] || '#94a3b8'} 50%)`
+                          : (TYPE_HEXES[pokemon.types[0].type.name] || '#94a3b8')
                   }}
               />
 
@@ -85,13 +85,16 @@ export default async function PokemonDetail({
 
               <div className="relative z-10 py-4">
                   <div className="relative w-80 h-80 mx-auto mb-6 flex items-center justify-center">
-                      <Image 
-                          src={pokemon.sprites.other['official-artwork'].front_default} 
-                          alt={pokemon.name}
-                          fill
-                          className="object-contain drop-shadow-2xl z-20 scale-125"
-                          priority
-                      />
+                      {getPokemonImage(pokemon) && (
+                        <Image 
+                            src={getPokemonImage(pokemon)} 
+                            alt={pokemon.name}
+                            fill
+                            className="object-contain drop-shadow-2xl z-20 scale-125"
+                            priority
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                        />
+                      )}
                   </div>
 
                   <h1 className="text-4xl font-bold text-gray-800 mb-2">{capitalize(pokemon.name)}</h1>
@@ -144,7 +147,7 @@ export default async function PokemonDetail({
           </div>
 
           {/* Evolution */}
-          <EvolutionChainDisplay chain={evolution} lang={lang} />
+          <EvolutionChainDisplay chain={enhancedEvolution} lang={lang} />
         </div>
       );
   } catch (error) {
