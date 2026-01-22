@@ -58,6 +58,3 @@ Asegúrate de tener instalado [Node.js](https://nodejs.org/) (versión 18 o supe
 - `components/`: Componentes de UI reutilizables como `PokemonCard`, `EvolutionChainDisplay` y `PokemonStats`.
 - `lib/`: Utilidades y lógica para el consumo de la API.
 - `public/`: Archivos estáticos e imágenes.
-
----
-*Desarrollado con ❤️ por el equipo de MBS.*
