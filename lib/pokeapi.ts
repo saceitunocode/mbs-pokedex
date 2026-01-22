@@ -1,11 +1,12 @@
 import { Pokemon, PokemonSpecies, EvolutionChain } from './types';
+import { ITEMS_PER_PAGE, REGION_RANGES } from './constants';
 
 const API_BASE = 'https://pokeapi.co/api/v2';
 
 // Cache 'force-cache' is default in Next.js GET fetch, but we can be explicit or use 'next: { revalidate: ... }'
 // For static content like Pokemon, generic caching is good.
 
-export async function getPokemonList(limit = 30, offset = 0): Promise<{ results: Pokemon[], total: number }> {
+export async function getPokemonList(limit = ITEMS_PER_PAGE, offset = 0): Promise<{ results: Pokemon[], total: number }> {
   const res = await fetch(`${API_BASE}/pokemon?limit=${limit}&offset=${offset}`);
   if (!res.ok) throw new Error('Failed to fetch pokemon list');
   const data = await res.json();
@@ -19,7 +20,7 @@ export async function getPokemonList(limit = 30, offset = 0): Promise<{ results:
   return { results, total: data.count };
 }
 
-export async function searchPokemon(query: string, types?: string, limit = 30, offset = 0): Promise<{ results: Pokemon[], total: number }> {
+export async function searchPokemon(query: string, types?: string, limit = ITEMS_PER_PAGE, offset = 0, regions?: string): Promise<{ results: Pokemon[], total: number }> {
   let filtered: { name: string; url: string }[] = [];
 
   if (types) {
@@ -43,11 +44,26 @@ export async function searchPokemon(query: string, types?: string, limit = 30, o
       }
     }
   } else {
-    // Otherwise fetch all pokemon names for searching
+    // Otherwise fetch all pokemon names for searching (up to Kanto/Johto/Hoenn limit or reasonable max)
+    // 1025 is current max national dex, safe enough to fetch all for client-side filtering if optimized, 
+    // but here we just fetch 2000 to be safe.
     const res = await fetch(`${API_BASE}/pokemon?limit=2000`);
     if (!res.ok) throw new Error('Failed to fetch pokemon search list');
     const data = await res.json();
     filtered = data.results;
+  }
+
+  // Filter by regions (ID range)
+  if (regions) {
+    const regionList = regions.split(',').filter(Boolean);
+    const validRanges = regionList.map(r => REGION_RANGES[r]).filter(Boolean);
+    
+    if (validRanges.length > 0) {
+      filtered = filtered.filter((p: { url: string }) => {
+        const id = parseInt(p.url.split('/').filter(Boolean).pop()!);
+        return validRanges.some(([start, end]) => id >= start && id <= end);
+      });
+    }
   }
 
   // Filter by query if provided

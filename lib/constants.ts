@@ -39,3 +39,19 @@ export const TYPE_HEXES: Record<string, string> = {
   fairy: '#f472b6',
   dark: '#374151',
 };
+
+export const ITEMS_PER_PAGE = 27;
+
+export const REGIONS = ['kanto', 'johto', 'hoenn', 'sinnoh', 'unova', 'kalos', 'alola', 'galar', 'paldea'] as const;
+
+export const REGION_RANGES: Record<string, [number, number]> = {
+  kanto: [1, 151],
+  johto: [152, 251],
+  hoenn: [252, 386],
+  sinnoh: [387, 493],
+  unova: [494, 649],
+  kalos: [650, 721],
+  alola: [722, 809],
+  galar: [810, 905],
+  paldea: [906, 1025]
+};
