@@ -19,6 +19,26 @@ export async function getPokemonList(limit = 30, offset = 0): Promise<{ results:
   return { results, total: data.count };
 }
 
+export async function searchPokemon(query: string, limit = 30, offset = 0): Promise<{ results: Pokemon[], total: number }> {
+  // To search effectively, we fetch a list of all names first
+  const res = await fetch(`${API_BASE}/pokemon?limit=2000`);
+  if (!res.ok) throw new Error('Failed to fetch pokemon search list');
+  const data = await res.json();
+
+  const filtered = data.results.filter((p: { name: string }) => 
+    p.name.toLowerCase().includes(query.toLowerCase())
+  );
+
+  // Apply pagination to the filtered list
+  const listToFetch = filtered.slice(offset, offset + limit);
+  const promises = listToFetch.map(async (p: { name: string }) => {
+    return getPokemonDetail(p.name);
+  });
+
+  const results = await Promise.all(promises);
+  return { results, total: filtered.length };
+}
+
 export async function getPokemonDetail(idOrName: string | number): Promise<Pokemon> {
   const res = await fetch(`${API_BASE}/pokemon/${idOrName}`);
   if (!res.ok) throw new Error(`Failed to fetch pokemon ${idOrName}`);
