@@ -3,13 +3,16 @@ import Image from 'next/image';
 import { Pokemon } from '@/lib/types';
 import { capitalize, formatId } from '@/lib/utils';
 import { TYPE_COLORS } from '@/lib/constants';
+import { Language, translations } from '@/lib/i18n';
 
 interface PokemonCardProps {
   pokemon: Pokemon;
+  lang: Language;
 }
 
-export default function PokemonCard({ pokemon }: PokemonCardProps) {
+export default function PokemonCard({ pokemon, lang }: PokemonCardProps) {
   const imageUrl = pokemon.sprites.other['official-artwork'].front_default;
+  const t = translations[lang];
 
   return (
     <Link 
@@ -25,7 +28,7 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
 
       <div className="relative z-10 flex flex-col items-center">
         {/* Image */}
-        <div className="relative w-44 h-44 mb-2 transform group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
+        <div className="relative w-44 h-44 mb-2 transform group-hover:scale-150 transition-transform duration-300 drop-shadow-md">
            {imageUrl && (
              <Image 
                src={imageUrl} 
@@ -49,29 +52,17 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
 
         {/* Types */}
         <div className="flex gap-2 mb-6">
-          {pokemon.types.map((t) => (
+          {pokemon.types.map((ty) => (
             <span 
-              key={t.type.name} 
-              className={`px-4 py-1.5 rounded-full text-[11px] font-extrabold text-white uppercase tracking-wider ${TYPE_COLORS[t.type.name] || 'bg-gray-400'}`}
+              key={ty.type.name} 
+              className={`px-4 py-1.5 rounded-full text-[11px] font-extrabold text-white uppercase tracking-wider ${TYPE_COLORS[ty.type.name] || 'bg-gray-400'}`}
             >
-              {t.type.name}
+              {(t as any).types?.[ty.type.name] || ty.type.name}
             </span>
           ))}
         </div>
 
-        {/* Physical Stats Pills */}
-        <div className="flex gap-4">
-            <div className='bg-gray-100 px-4 py-1.5 rounded-full'>
-                 <span className='text-xs font-bold text-gray-700 uppercase'>
-                    {pokemon.height / 10}M
-                 </span>
-            </div>
-            <div className='bg-gray-100 px-4 py-1.5 rounded-full'>
-                 <span className='text-xs font-bold text-gray-700 uppercase'>
-                    {pokemon.weight / 10}KG
-                 </span>
-            </div>
-        </div>
+
       </div>
     </Link>
   );

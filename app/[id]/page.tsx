@@ -3,11 +3,14 @@ import Image from 'next/image';
 import { getPokemonDetail, getPokemonSpecies, getEvolutionChain } from '@/lib/pokeapi';
 import PokemonStats from '@/components/PokemonStats';
 import EvolutionChainDisplay from '@/components/EvolutionChainDisplay';
-import { TYPE_COLORS } from '@/lib/constants';
+import { TYPE_COLORS, TYPE_HEXES } from '@/lib/constants';
 import { capitalize, formatId } from '@/lib/utils';
 import { ChevronLeft } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
+import { cookies } from 'next/headers';
+import { getLanguage, translations } from '@/lib/i18n';
+import LanguageSelector from '@/components/LanguageSelector';
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   const { id } = await params;
@@ -31,88 +34,117 @@ export default async function PokemonDetail({
 }) {
   const { id } = await params;
   
+  const cookieStore = await cookies();
+  const lang = getLanguage(cookieStore);
+  const t = translations[lang];
+
   // Parallel fetch for data
   try {
       const pokemon = await getPokemonDetail(id);
       const species = await getPokemonSpecies(id);
       const evolution = await getEvolutionChain(species.evolution_chain.url);
 
-      const description = species.flavor_text_entries.find(
-          (entry) => entry.language.name === 'en'
+      const description = (
+          species.flavor_text_entries.find((entry) => entry.language.name === lang) ||
+          species.flavor_text_entries.find((entry) => entry.language.name === 'en')
       )?.flavor_text.replace(/\f/g, ' ');
 
       return (
         <div className="max-w-4xl mx-auto space-y-8">
-          <Link 
-            href="/" 
-            className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-800 transition-colors font-medium mb-4"
-          >
-            <ChevronLeft size={20} />
-            Back to Pokedex
-          </Link>
+          <div className="flex items-center justify-between mb-4">
+            <Link 
+              href="/" 
+              className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-800 transition-colors font-medium"
+            >
+              <ChevronLeft size={20} />
+              {t.backToPokedex}
+            </Link>
+            <LanguageSelector currentLang={lang} />
+          </div>
 
           {/* Header Card */}
           <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden text-center p-8 relative">
+              {/* Dynamic Background Layer */}
+              <div 
+                  className="absolute top-0 inset-x-0 h-1/2 opacity-30 z-0"
+                  style={{
+                      background: pokemon.types.length > 1
+                          ? `linear-gradient(135deg, ${TYPE_HEXES[pokemon.types[0].type.name]} 50%, ${TYPE_HEXES[pokemon.types[1].type.name]} 50%)`
+                          : TYPE_HEXES[pokemon.types[0].type.name]
+                  }}
+              />
+
               {/* Back Name Watermark */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 text-[10rem] font-bold text-gray-50 opacity-50 whitespace-nowrap select-none z-0">
-                  {pokemon.name.toUpperCase()}
+              <div 
+                  className="absolute top-0 inset-x-0 h-1/2 flex items-center justify-center font-bold text-gray-50 opacity-50 whitespace-nowrap select-none z-0 overflow-hidden"
+              >
+                  <span style={{ fontSize: `${Math.min(10, 60 / pokemon.name.length)}rem` }}>
+                      {pokemon.name.toUpperCase()}
+                  </span>
               </div>
 
-              <div className="relative z-10">
-                  <div className="relative w-64 h-64 mx-auto mb-6">
+              <div className="relative z-10 py-4">
+                  <div className="relative w-80 h-80 mx-auto mb-6 flex items-center justify-center">
                       <Image 
                           src={pokemon.sprites.other['official-artwork'].front_default} 
                           alt={pokemon.name}
                           fill
-                          className="object-contain drop-shadow-xl"
+                          className="object-contain drop-shadow-2xl z-20 scale-125"
                           priority
                       />
                   </div>
 
                   <h1 className="text-4xl font-bold text-gray-800 mb-2">{capitalize(pokemon.name)}</h1>
-                  <p className="text-gray-400 font-bold text-xl mb-6">{formatId(pokemon.id)}</p>
+                  <div className="mb-6">
+                      <span className="bg-gray-100 text-xs font-bold text-gray-500 px-3 py-1 rounded-full shadow-sm">
+                        {formatId(pokemon.id)}
+                      </span>
+                  </div>
 
                   <div className="flex justify-center gap-3 mb-8">
-                      {pokemon.types.map((t) => (
+                       {pokemon.types.map((ty) => (
                           <span 
-                              key={t.type.name} 
-                              className={`px-6 py-2 rounded-full text-sm font-bold text-white uppercase tracking-wider shadow-sm ${TYPE_COLORS[t.type.name] || 'bg-gray-400'}`}
+                              key={ty.type.name} 
+                              className={`px-6 py-2 rounded-full text-sm font-bold text-white uppercase tracking-wider shadow-sm ${TYPE_COLORS[ty.type.name] || 'bg-gray-400'}`}
                           >
-                              {t.type.name}
+                              {(t as any).types?.[ty.type.name] || ty.type.name}
                           </span>
                       ))}
                   </div>
 
-                  {/* Physical Stats */}
-                  <div className="flex justify-center gap-12 text-gray-600">
-                      <div className="flex flex-col">
-                          <span className="text-2xl font-bold text-gray-800">{pokemon.weight / 10} KG</span>
-                          <span className="text-xs uppercase tracking-wide text-gray-400 font-bold">Weight</span>
-                      </div>
-                      <div className="flex flex-col">
-                          <span className="text-2xl font-bold text-gray-800">{pokemon.height / 10} M</span>
-                          <span className="text-xs uppercase tracking-wide text-gray-400 font-bold">Height</span>
-                      </div>
-                  </div>
+
               </div>
           </div>
 
           {/* About / Stats Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
              {/* Description */}
-             <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 flex flex-col justify-center">
-                  <h3 className="text-xl font-bold text-gray-800 mb-4">About</h3>
-                  <p className="text-gray-600 leading-relaxed text-lg">
-                      {description || "No description available."}
+             <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 flex flex-col">
+                  <h3 className="text-xl font-bold text-gray-800 mb-4">{t.about}</h3>
+                  <p className="text-gray-600 leading-relaxed text-lg mb-4">
+                      {description || t.noDescription}
                   </p>
+
+                  <div className="flex-1 flex flex-col justify-center pt-6 border-t border-gray-100">
+                      <div className="grid grid-cols-2 gap-4">
+                          <div className="flex flex-col items-center text-center">
+                              <span className="text-xl font-bold text-gray-800">{pokemon.height / 10} M</span>
+                              <span className="text-xs uppercase tracking-wide text-gray-400 font-bold">{t.height}</span>
+                          </div>
+                          <div className="flex flex-col items-center text-center">
+                              <span className="text-xl font-bold text-gray-800">{pokemon.weight / 10} KG</span>
+                              <span className="text-xs uppercase tracking-wide text-gray-400 font-bold">{t.weight}</span>
+                          </div>
+                      </div>
+                  </div>
              </div>
 
              {/* Stats */}
-             <PokemonStats stats={pokemon.stats} />
+             <PokemonStats stats={pokemon.stats} lang={lang} />
           </div>
 
           {/* Evolution */}
-          <EvolutionChainDisplay chain={evolution} />
+          <EvolutionChainDisplay chain={evolution} lang={lang} />
         </div>
       );
   } catch (error) {

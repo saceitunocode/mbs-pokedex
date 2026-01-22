@@ -17,3 +17,23 @@ export const TYPE_COLORS: Record<string, string> = {
   steel: 'bg-slate-500',
   fairy: 'bg-pink-400',
 };
+
+export const TYPE_HEXES: Record<string, string> = {
+  normal: '#94a3b8',
+  fire: '#f97316',
+  water: '#3b82f6',
+  grass: '#22c55e',
+  electric: '#facc15',
+  ice: '#67e8f9',
+  fighting: '#dc2626',
+  poison: '#a855f7',
+  ground: '#d97706',
+  flying: '#a5b4fc',
+  psychic: '#ec4899',
+  bug: '#84cc16',
+  rock: '#78716c',
+  ghost: '#7c3aed',
+  dragon: '#7c3aed',
+  steel: '#64748b',
+  fairy: '#f472b6',
+};

@@ -1,23 +1,27 @@
 import { PokemonStat } from "@/lib/types";
 import { capitalize } from "@/lib/utils";
+import { Language, translations } from "@/lib/i18n";
 
 interface PokemonStatsProps {
   stats: PokemonStat[];
+  lang: Language;
 }
 
-const STAT_NAMES_MAP: Record<string, string> = {
-  hp: 'HP',
-  attack: 'Attack',
-  defense: 'Defense',
-  'special-attack': 'Sp. Atk',
-  'special-defense': 'Sp. Def',
-  speed: 'Speed',
-};
+export default function PokemonStats({ stats, lang }: PokemonStatsProps) {
+  const t = translations[lang];
 
-export default function PokemonStats({ stats }: PokemonStatsProps) {
+  const STAT_NAMES_MAP: Record<string, string> = {
+    hp: t.hp,
+    attack: t.attack,
+    defense: t.defense,
+    'special-attack': t.specialAttack,
+    'special-defense': t.specialDefense,
+    speed: t.speed,
+  };
+
   return (
     <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-      <h3 className="text-xl font-bold text-gray-800 mb-4">Base Stats</h3>
+      <h3 className="text-xl font-bold text-gray-800 mb-4">{t.baseStats}</h3>
       <div className="space-y-3">
         {stats.map((s) => {
           const name = STAT_NAMES_MAP[s.stat.name] || capitalize(s.stat.name);
@@ -37,6 +41,24 @@ export default function PokemonStats({ stats }: PokemonStatsProps) {
           );
         })}
       </div>
+
+      {/* Total Stat */}
+      {(() => {
+        const total = stats.reduce((acc, s) => acc + s.base_stat, 0);
+        const totalPercentage = Math.min((total / 720) * 100, 100);
+        return (
+          <div className="mt-6 pt-4 border-t border-gray-100 flex items-center gap-4">
+            <span className="w-20 text-sm font-black text-gray-800 uppercase tracking-wider">{t.total}</span>
+            <span className="w-8 text-sm font-black text-gray-900 text-right">{total}</span>
+            <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+              <div 
+                className="h-full rounded-full bg-indigo-600"
+                style={{ width: `${totalPercentage}%` }}
+              />
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }
