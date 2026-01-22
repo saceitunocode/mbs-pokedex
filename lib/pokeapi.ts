@@ -19,17 +19,45 @@ export async function getPokemonList(limit = 30, offset = 0): Promise<{ results:
   return { results, total: data.count };
 }
 
-export async function searchPokemon(query: string, limit = 30, offset = 0): Promise<{ results: Pokemon[], total: number }> {
-  // To search effectively, we fetch a list of all names first
-  const res = await fetch(`${API_BASE}/pokemon?limit=2000`);
-  if (!res.ok) throw new Error('Failed to fetch pokemon search list');
-  const data = await res.json();
+export async function searchPokemon(query: string, types?: string, limit = 30, offset = 0): Promise<{ results: Pokemon[], total: number }> {
+  let filtered: { name: string; url: string }[] = [];
 
-  const filtered = data.results.filter((p: { name: string }) => 
-    p.name.toLowerCase().includes(query.toLowerCase())
-  );
+  if (types) {
+    const typeList = types.split(',').filter(Boolean);
+    const typeResults = await Promise.all(
+      typeList.map(async (t) => {
+        const res = await fetch(`${API_BASE}/type/${t}`);
+        if (!res.ok) throw new Error(`Failed to fetch pokemon of type ${t}`);
+        const data = await res.json();
+        return data.pokemon.map((p: { pokemon: { name: string; url: string } }) => p.pokemon);
+      })
+    );
 
-  // Apply pagination to the filtered list
+    // Initial filtered list is the first type's results
+    if (typeResults.length > 0) {
+      filtered = typeResults[0];
+      // Intersect with subsequent type results
+      for (let i = 1; i < typeResults.length; i++) {
+        const currentTypePokemon = new Set(typeResults[i].map((p: any) => p.name));
+        filtered = filtered.filter(p => currentTypePokemon.has(p.name));
+      }
+    }
+  } else {
+    // Otherwise fetch all pokemon names for searching
+    const res = await fetch(`${API_BASE}/pokemon?limit=2000`);
+    if (!res.ok) throw new Error('Failed to fetch pokemon search list');
+    const data = await res.json();
+    filtered = data.results;
+  }
+
+  // Filter by query if provided
+  if (query) {
+    filtered = filtered.filter((p: { name: string }) => 
+      p.name.toLowerCase().includes(query.toLowerCase())
+    );
+  }
+
+  // Apply pagination
   const listToFetch = filtered.slice(offset, offset + limit);
   const promises = listToFetch.map(async (p: { name: string }) => {
     return getPokemonDetail(p.name);
