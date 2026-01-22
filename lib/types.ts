@@ -15,6 +15,7 @@ export interface PokemonStat {
 }
 
 export interface PokemonSprites {
+  front_default: string;
   other: {
     "official-artwork": {
       front_default: string;
@@ -30,6 +31,10 @@ export interface Pokemon {
   sprites: PokemonSprites;
   types: PokemonType[];
   stats: PokemonStat[];
+  species: {
+    name: string;
+    url: string;
+  };
 }
 
 export interface PokemonSpecies {
@@ -42,6 +47,13 @@ export interface PokemonSpecies {
   evolution_chain: {
     url: string;
   };
+  varieties: {
+    is_default: boolean;
+    pokemon: {
+      name: string;
+      url: string;
+    };
+  }[];
 }
 
 export interface EvolutionDetail {
@@ -54,4 +66,15 @@ export interface EvolutionDetail {
 
 export interface EvolutionChain {
   chain: EvolutionDetail;
+}
+
+export interface EnhancedEvolutionNode {
+  name: string;
+  id: number;
+  varieties: {
+    name: string;
+    id: number;
+    isDefault: boolean;
+  }[];
+  evolvesTo: EnhancedEvolutionNode[];
 }

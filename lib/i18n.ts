@@ -6,6 +6,8 @@ export const translations = {
     page: 'Page',
     previous: 'Previous',
     next: 'Next',
+    first: 'First',
+    last: 'Last',
     backToPokedex: 'Back to Pokedex',
     about: 'About',
     baseStats: 'Base Stats',
@@ -32,6 +34,8 @@ export const translations = {
     page: 'Página',
     previous: 'Anterior',
     next: 'Siguiente',
+    first: 'Primero',
+    last: 'Último',
     backToPokedex: 'Volver a la Pokédex',
     about: 'Sobre',
     baseStats: 'Estadísticas Base',
@@ -49,7 +53,7 @@ export const translations = {
     types: {
       normal: 'Normal', fire: 'Fuego', water: 'Agua', electric: 'Eléctrico', grass: 'Planta',
       ice: 'Hielo', fighting: 'Lucha', poison: 'Veneno', ground: 'Tierra', flying: 'Volador',
-      psychic: 'Psíquico', bug: 'Bicho', rock: 'Roca', ghost: 'Fantante', dragon: 'Dragón',
+      psychic: 'Psíquico', bug: 'Bicho', rock: 'Roca', ghost: 'Fantasma', dragon: 'Dragón',
       steel: 'Acero', fairy: 'Hada', dark: 'Siniestro',
     }
   },
