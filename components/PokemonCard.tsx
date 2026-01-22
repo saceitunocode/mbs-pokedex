@@ -17,12 +17,12 @@ export default function PokemonCard({ pokemon, lang }: PokemonCardProps) {
   return (
     <Link 
       href={`/${pokemon.name}`} 
-      className="group relative block bg-white rounded-[2rem] shadow-sm hover:shadow-xl transition-all duration-300 p-8 overflow-hidden border border-gray-100"
+      className="group relative block bg-white dark:bg-gray-800 rounded-[2rem] shadow-sm hover:shadow-xl transition-all duration-300 p-8 overflow-hidden border border-gray-100 dark:border-gray-700"
     >
       {/* Watermark ID - Large, centered behind image */}
       <div className="absolute inset-0 flex items-center justify-center select-none pointer-events-none z-0">
         <span 
-          className="font-black text-gray-100 opacity-60"
+          className="font-black text-gray-100 dark:text-gray-900 opacity-60 dark:opacity-20"
           style={{ fontSize: `${Math.min(10, 35 / (formatId(pokemon.id).length + 1))}rem` }}
         >
           {formatId(pokemon.id)}
@@ -45,10 +45,10 @@ export default function PokemonCard({ pokemon, lang }: PokemonCardProps) {
 
         {/* Name Row with Badge */}
         <div className="flex items-center gap-2 mb-4">
-          <span className="bg-gray-100 text-[10px] font-bold text-gray-500 px-2 py-1 rounded-full">
+          <span className="bg-gray-100 dark:bg-gray-700 text-[10px] font-bold text-gray-500 dark:text-gray-400 px-2 py-1 rounded-full">
             {formatId(pokemon.id)}
           </span>
-          <h2 className="text-2xl font-black text-gray-900 uppercase">
+          <h2 className="text-2xl font-black text-gray-900 dark:text-gray-100 uppercase transition-colors duration-200">
             {pokemon.name}
           </h2>
         </div>

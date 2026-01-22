@@ -14,8 +14,8 @@ export default function EvolutionChainDisplay({ chain, lang }: EvolutionChainDis
   const t = translations[lang];
   
   return (
-      <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 overflow-hidden">
-        <h3 className="text-xl font-bold text-gray-800 mb-6 px-2">{t.evolutionChain}</h3>
+      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden transition-colors duration-200">
+        <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6 px-2">{t.evolutionChain}</h3>
         <div className="flex justify-center w-full">
             <div className="inline-flex items-center gap-6 p-4 overflow-x-auto min-w-full lg:min-w-0 no-scrollbar">
                 <EvolutionNode node={chain} />
@@ -32,7 +32,7 @@ function PokemonItem({ variety, speciesId, isPrimary = false }: { variety: any, 
             className={`flex flex-col items-center group transition-all duration-300 ${isPrimary ? 'scale-110 z-10' : 'scale-95 opacity-70 hover:opacity-100 hover:scale-105'}`}
         >
             {/* The Circle - Center of this item is the center of this circle */}
-            <div className="relative w-24 h-24 bg-gray-50 rounded-full group-hover:bg-white transition-all duration-500 cursor-pointer border-2 border-transparent group-hover:border-indigo-400 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)] group-hover:shadow-xl flex items-center justify-center z-10">
+            <div className="relative w-24 h-24 bg-gray-50 dark:bg-gray-700/50 rounded-full group-hover:bg-white dark:group-hover:bg-gray-600 transition-all duration-500 cursor-pointer border-2 border-transparent group-hover:border-indigo-400 dark:group-hover:border-indigo-500 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)] group-hover:shadow-xl flex items-center justify-center z-10">
                 <Image 
                     src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${variety.id}.png`} 
                     alt={variety.name} 
@@ -43,10 +43,10 @@ function PokemonItem({ variety, speciesId, isPrimary = false }: { variety: any, 
             
             {/* Metadata Area - Fixed height (64px / h-16) matches top padding */}
             <div className="flex flex-col items-center justify-center h-16 text-center px-2 mt-2">
-                <span className="text-[11px] font-black text-gray-800 uppercase tracking-tighter leading-tight line-clamp-2">
+                <span className="text-[11px] font-black text-gray-800 dark:text-gray-100 uppercase tracking-tighter leading-tight line-clamp-2">
                     {variety.name.replace(/-/g, ' ')}
                 </span>
-                <span className="text-[9px] text-gray-400 font-bold uppercase mt-1">
+                <span className="text-[9px] text-gray-400 dark:text-gray-500 font-bold uppercase mt-1">
                     {formatId(speciesId)}
                 </span>
             </div>
@@ -70,7 +70,7 @@ function EvolutionNode({ node }: { node: EnhancedEvolutionNode }) {
                 <div className="flex items-center gap-2">
                 <div className="flex flex-col items-center">
                     <div className="flex items-center justify-center w-10 h-24 shrink-0"> 
-                        <ArrowRight className="text-gray-200 w-6 h-6 group-hover:text-indigo-300 transition-colors" />
+                        <ArrowRight className="text-gray-200 dark:text-gray-700 w-6 h-6 group-hover:text-indigo-300 transition-colors" />
                     </div>
                     {/* Spacer to match PokemonItem metadata height (h-16 + mt-2) */}
                     <div className="h-16 mt-2" aria-hidden="true" />
@@ -91,7 +91,7 @@ function EvolutionNode({ node }: { node: EnhancedEvolutionNode }) {
                             <div key={next.name} className="flex items-center gap-2">
                                 <div className="flex flex-col items-center">
                                     <div className="flex items-center justify-center w-10 h-24 shrink-0">
-                                        <ArrowRight className="text-gray-200 w-6 h-6" />
+                                        <ArrowRight className="text-gray-200 dark:text-gray-700 w-6 h-6" />
                                     </div>
                                     <div className="h-16 mt-2" aria-hidden="true" />
                                 </div>

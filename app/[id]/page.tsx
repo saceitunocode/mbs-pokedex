@@ -11,6 +11,7 @@ import { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { getLanguage, translations } from '@/lib/i18n';
 import LanguageSelector from '@/components/LanguageSelector';
+import ThemeSelector from '@/components/ThemeSelector';
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   const { id } = await params;
@@ -54,16 +55,19 @@ export default async function PokemonDetail({
           <div className="flex items-center justify-between mb-4">
             <Link 
               href="/" 
-              className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-800 transition-colors font-medium"
+              className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 transition-colors font-medium"
             >
               <ChevronLeft size={20} />
               {t.backToPokedex}
             </Link>
-            <LanguageSelector currentLang={lang} />
+            <div className="flex items-center gap-3">
+              <ThemeSelector />
+              <LanguageSelector currentLang={lang} />
+            </div>
           </div>
 
           {/* Header Card */}
-          <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden text-center p-8 relative">
+          <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden text-center p-8 relative transition-colors duration-200">
               {/* Dynamic Background Layer */}
               <div 
                   className="absolute top-0 inset-x-0 h-1/2 opacity-30 z-0"
@@ -76,7 +80,7 @@ export default async function PokemonDetail({
 
               {/* Back Name Watermark */}
               <div 
-                  className="absolute top-0 inset-x-0 h-1/2 flex items-center justify-center font-bold text-gray-50 opacity-50 whitespace-nowrap select-none z-0 overflow-hidden"
+                  className="absolute top-0 inset-x-0 h-1/2 flex items-center justify-center font-bold text-gray-50 dark:text-gray-900 opacity-50 dark:opacity-20 whitespace-nowrap select-none z-0 overflow-hidden"
               >
                   <span style={{ fontSize: `${Math.min(10, 60 / pokemon.name.length)}rem` }}>
                       {pokemon.name.toUpperCase()}
@@ -97,9 +101,9 @@ export default async function PokemonDetail({
                       )}
                   </div>
 
-                  <h1 className="text-4xl font-bold text-gray-800 mb-2">{capitalize(pokemon.name)}</h1>
+                  <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-2 transition-colors duration-200">{capitalize(pokemon.name)}</h1>
                   <div className="mb-6">
-                      <span className="bg-gray-100 text-xs font-bold text-gray-500 px-3 py-1 rounded-full shadow-sm">
+                      <span className="bg-gray-100 dark:bg-gray-700 text-xs font-bold text-gray-500 dark:text-gray-400 px-3 py-1 rounded-full shadow-sm">
                         {formatId(pokemon.id)}
                       </span>
                   </div>
@@ -122,20 +126,20 @@ export default async function PokemonDetail({
           {/* About / Stats Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
              {/* Description */}
-             <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 flex flex-col">
-                  <h3 className="text-xl font-bold text-gray-800 mb-4">{t.about}</h3>
-                  <p className="text-gray-600 leading-relaxed text-lg mb-4">
+             <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col transition-colors duration-200">
+                  <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">{t.about}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-lg mb-4">
                       {description || t.noDescription}
                   </p>
 
-                  <div className="flex-1 flex flex-col justify-center pt-6 border-t border-gray-100">
+                  <div className="flex-1 flex flex-col justify-center pt-6 border-t border-gray-100 dark:border-gray-700">
                       <div className="grid grid-cols-2 gap-4">
                           <div className="flex flex-col items-center text-center">
-                              <span className="text-xl font-bold text-gray-800">{pokemon.height / 10} M</span>
+                              <span className="text-xl font-bold text-gray-800 dark:text-gray-100">{pokemon.height / 10} M</span>
                               <span className="text-xs uppercase tracking-wide text-gray-400 font-bold">{t.height}</span>
                           </div>
                           <div className="flex flex-col items-center text-center">
-                              <span className="text-xl font-bold text-gray-800">{pokemon.weight / 10} KG</span>
+                              <span className="text-xl font-bold text-gray-800 dark:text-gray-100">{pokemon.weight / 10} KG</span>
                               <span className="text-xs uppercase tracking-wide text-gray-400 font-bold">{t.weight}</span>
                           </div>
                       </div>

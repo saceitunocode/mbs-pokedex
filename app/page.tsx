@@ -6,6 +6,7 @@ import LanguageSelector from '@/components/LanguageSelector';
 import Pagination from '@/components/Pagination';
 import { SearchBar } from '@/components/SearchBar';
 import { TypeFilter } from '@/components/TypeFilter';
+import ThemeSelector from '@/components/ThemeSelector';
 
 export default async function Home({
   searchParams,
@@ -34,8 +35,11 @@ export default async function Home({
       {/* Header */}
       <header className="flex flex-col gap-8 mb-12">
         <div className="flex items-center justify-between w-full">
-          <h1 className="text-4xl font-bold text-gray-800 tracking-tight">{t.pokedex}</h1>
-          <LanguageSelector currentLang={lang} />
+          <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100 transition-colors duration-200 tracking-tight">{t.pokedex}</h1>
+          <div className="flex items-center gap-3">
+            <ThemeSelector />
+            <LanguageSelector currentLang={lang} />
+          </div>
         </div>
         
         <div className="flex flex-col sm:flex-row gap-4 w-full h-full items-start">
