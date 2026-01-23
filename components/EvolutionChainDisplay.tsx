@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { EnhancedEvolutionNode } from "@/lib/types";
-import { capitalize, formatId } from '@/lib/utils';
+import { formatId } from '@/lib/utils';
 import { ArrowRight } from 'lucide-react';
 import { Language, translations } from "@/lib/i18n";
 
@@ -25,7 +25,7 @@ export default function EvolutionChainDisplay({ chain, lang }: EvolutionChainDis
   );
 }
 
-function PokemonItem({ variety, speciesId, isPrimary = false }: { variety: any, speciesId: number, isPrimary?: boolean }) {
+function PokemonItem({ variety, speciesId, isPrimary = false }: { variety: { name: string, id: number, isDefault: boolean }, speciesId: number, isPrimary?: boolean }) {
     return (
         <Link 
             href={`/${variety.name}`} 

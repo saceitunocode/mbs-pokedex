@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Pokemon } from '@/lib/types';
-import { capitalize, formatId, getPokemonImage } from '@/lib/utils';
+import { formatId, getPokemonImage } from '@/lib/utils';
 import { TYPE_COLORS } from '@/lib/constants';
 import { Language, translations } from '@/lib/i18n';
 
@@ -17,7 +17,7 @@ export default function PokemonCard({ pokemon, lang }: PokemonCardProps) {
   return (
     <Link 
       href={`/${pokemon.name}`} 
-      className="group relative block bg-white dark:bg-gray-800 rounded-[2rem] shadow-sm hover:shadow-xl transition-all duration-300 p-8 overflow-hidden border border-gray-100 dark:border-gray-700"
+      className="group relative block bg-white dark:bg-gray-800 rounded-4xl shadow-sm hover:shadow-xl transition-all duration-300 p-8 overflow-hidden border border-gray-100 dark:border-gray-700"
     >
       {/* Watermark ID - Large, centered behind image */}
       <div className="absolute inset-0 flex items-center justify-center select-none pointer-events-none z-0">
@@ -60,7 +60,7 @@ export default function PokemonCard({ pokemon, lang }: PokemonCardProps) {
               key={ty.type.name} 
               className={`px-4 py-1.5 rounded-full text-[11px] font-extrabold text-white uppercase tracking-wider ${TYPE_COLORS[ty.type.name] || 'bg-gray-400'}`}
             >
-              {(t as any).types?.[ty.type.name] || ty.type.name}
+              {t.types[ty.type.name as keyof typeof t.types] || ty.type.name}
             </span>
           ))}
         </div>
