@@ -1,7 +1,6 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { Languages } from 'lucide-react';
 import { Language } from '@/lib/i18n';
 
 interface LanguageSelectorProps {

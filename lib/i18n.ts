@@ -10,7 +10,7 @@ export const translations = {
     last: 'Last',
     backToPokedex: 'Back to Pokedex',
     searchPlaceholder: 'Search Pokemon by name or ID...',
-    noResults: 'No results found',
+    noResults: 'No results found for',
     allTypes: 'All Types',
     about: 'About',
     baseStats: 'Base Stats',
@@ -53,7 +53,7 @@ export const translations = {
     last: 'Último',
     backToPokedex: 'Volver a la Pokédex',
     searchPlaceholder: 'Buscar Pokémon por nombre o ID...',
-    noResults: 'No se encontraron resultados',
+    noResults: 'No se encontraron resultados para',
     allTypes: 'Todos los tipos',
     about: 'Sobre',
     baseStats: 'Estadísticas Base',
@@ -89,7 +89,9 @@ export const translations = {
   },
 };
 
-export function getLanguage(cookies: any): Language {
+type CookieStore = Awaited<ReturnType<typeof import('next/headers').cookies>>;
+
+export function getLanguage(cookies: CookieStore): Language {
   const lang = cookies.get('lang')?.value;
   return lang === 'es' ? 'es' : 'en';
 }

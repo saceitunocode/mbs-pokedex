@@ -39,7 +39,7 @@ export async function searchPokemon(query: string, types?: string, limit = ITEMS
       filtered = typeResults[0];
       // Intersect with subsequent type results
       for (let i = 1; i < typeResults.length; i++) {
-        const currentTypePokemon = new Set(typeResults[i].map((p: any) => p.name));
+        const currentTypePokemon = new Set(typeResults[i].map((p: { name: string }) => p.name));
         filtered = filtered.filter(p => currentTypePokemon.has(p.name));
       }
     }
@@ -123,7 +123,7 @@ export async function getPokemonDetailWithFallback(idOrName: string | number): P
         return { pokemon, species };
       }
       throw error; // Rethrow if no default variety found
-    } catch (innerError) {
+    } catch {
       throw error; // Rethrow original error if both fail
     }
   }

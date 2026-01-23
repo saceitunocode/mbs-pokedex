@@ -29,7 +29,7 @@ export default function Pagination({ currentPage, totalPages, lang }: Pagination
       for (let i = 1; i <= totalPages; i++) pages.push(i);
     } else {
       let start = Math.max(1, currentPage - 2);
-      let end = Math.min(totalPages, start + 4);
+      const end = Math.min(totalPages, start + 4);
 
       if (end === totalPages) {
         start = Math.max(1, end - 4);
