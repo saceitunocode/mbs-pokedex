@@ -40,21 +40,59 @@ Asegúrate de tener instalado [Node.js](https://nodejs.org/) (versión 18 o supe
    cd mbs-pokedex
    ```
 
-2. Instala las dependencias:
+2. Instala pnpm (si no lo tienes):
    ```bash
-   npm install
+   npm install -g pnpm
    ```
 
-3. Inicia el servidor de desarrollo:
+3. Instala las dependencias:
    ```bash
-   npm run dev
+   pnpm install
    ```
 
-4. Abre tu navegador en [http://localhost:3000](http://localhost:3000) para ver el resultado.
+4. Inicia el servidor de desarrollo:
+   ```bash
+   pnpm dev
+   ```
+
+5. Abre tu navegador en [http://localhost:3000](http://localhost:3000) para ver el resultado.
+
+## � Scripts Disponibles
+
+En el directorio del proyecto, puedes ejecutar:
+
+- `pnpm dev`: Inicia la aplicación en modo de desarrollo.\
+  Abre [http://localhost:3000](http://localhost:3000) para verlo en el navegador.
+
+- `pnpm build`: Construye la aplicación para producción.\
+  Optimiza el rendimiento para el despliegue.
+
+- `pnpm start`: Inicia un servidor de producción Next.js.\
+  Generalmente se usa después de ejecutar `pnpm build`.
+
+- `pnpm lint`: Ejecuta el linter (ESLint) para encontrar y arreglar problemas en el código.
+
+- `pnpm test`: Ejecuta los tests unitarios utilizando Vitest.
 
 ## 📁 Estructura del Proyecto
 
-- `app/`: Contiene las rutas y la lógica de las páginas (Next.js App Router).
-- `components/`: Componentes de UI reutilizables como `PokemonCard`, `EvolutionChainDisplay` y `PokemonStats`.
-- `lib/`: Utilidades y lógica para el consumo de la API.
-- `public/`: Archivos estáticos e imágenes.
+Una visión general de la estructura de directorios principal:
+
+- `app/`: Directorio principal de la aplicación (Next.js App Router).
+  - `layout.tsx`: Layout raíz de la aplicación.
+  - `page.tsx`: Página principal (Home).
+  - `globals.css`: Estilos globales y configuración de Tailwind.
+- `components/`: Biblioteca de componentes de UI reutilizables.
+  - `PokemonCard.tsx`: Tarjeta de visualización individual de Pokémon.
+  - `PokemonStats.tsx`: Componente para gráficos de estadísticas.
+  - `ThemeSelector.tsx`: Selector de tema claro/oscuro.
+  - ...y otros componentes modulares.
+- `lib/`: Lógica de negocio y utilidades.
+  - `api.ts`: Cliente y funciones para interactuar con la PokéAPI.
+  - `utils.ts`: Funciones auxiliares generales.
+- `public/`: Archivos estáticos públicos (imágenes, fuentes, iconos).
+- `test/`: Configuración y utilidades para pruebas.
+- `eslint.config.mjs`: Configuración de reglas de linting.
+- `vitest.config.ts`: Configuración del runner de pruebas Vitest.
+- `tailwind.config.js`: Configuración personalizada de Tailwind CSS.
+
