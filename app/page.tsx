@@ -8,19 +8,22 @@ import { SearchBar } from '@/components/SearchBar';
 import { TypeFilter } from '@/components/TypeFilter';
 import { RegionFilter } from '@/components/RegionFilter';
 import ThemeSelector from '@/components/ThemeSelector';
+import { ViewModeSelector, ViewMode } from '@/components/ViewModeSelector';
+import PokemonListItem from '@/components/PokemonListItem';
 
 import { ITEMS_PER_PAGE } from '@/lib/constants';
 
 export default async function Home({
   searchParams,
 }: {
-  searchParams: { page?: string, q?: string, type?: string, region?: string };
+  searchParams: { page?: string, q?: string, type?: string, region?: string, view?: string };
 }) {
   const params = await searchParams;
   const page = Number(params?.page) || 1;
   const query = params?.q || '';
   const type = params?.type || '';
   const region = params?.region || '';
+  const viewMode = (params?.view as ViewMode) || 'grid';
   const limit = ITEMS_PER_PAGE;
   const offset = (page - 1) * limit;
 
@@ -48,26 +51,41 @@ export default async function Home({
           </div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 w-full h-full items-start">
-          <div className="w-full md:col-span-2">
-            <SearchBar placeholder={t.searchPlaceholder} />
+        <div className="flex flex-col gap-4 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 w-full h-full items-start">
+            <div className="w-full md:col-span-2">
+              <SearchBar placeholder={t.searchPlaceholder} />
+            </div>
+            <div className="w-full md:col-span-1">
+              <TypeFilter lang={lang} />
+            </div>
+            <div className="w-full md:col-span-1">
+              <RegionFilter lang={lang} />
+            </div>
           </div>
-          <div className="w-full md:col-span-1">
-            <TypeFilter lang={lang} />
-          </div>
-          <div className="w-full md:col-span-1">
-            <RegionFilter lang={lang} />
+          
+          {/* View Mode Selector */}
+          <div className="flex justify-end">
+            <ViewModeSelector />
           </div>
         </div>
       </header>
 
       {pokemonList.length > 0 ? (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {pokemonList.map((pokemon) => (
-              <PokemonCard key={pokemon.id} pokemon={pokemon} lang={lang} />
-            ))}
-          </div>
+          {viewMode === 'grid' ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {pokemonList.map((pokemon) => (
+                <PokemonCard key={pokemon.id} pokemon={pokemon} lang={lang} />
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col gap-4">
+              {pokemonList.map((pokemon) => (
+                <PokemonListItem key={pokemon.id} pokemon={pokemon} lang={lang} />
+              ))}
+            </div>
+          )}
 
           {/* Pagination */}
           <Pagination 
