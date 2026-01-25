@@ -23,7 +23,7 @@ export function ViewModeSelector() {
         onClick={() => handleViewChange('grid')}
         className={`flex items-center justify-center p-2.5 rounded-xl font-medium text-sm transition-all duration-200 ${
           currentView === 'grid'
-            ? 'bg-blue-500 text-white shadow-md'
+            ? 'bg-indigo-600 text-white shadow-md'
             : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
         }`}
         aria-label="Grid view"
@@ -35,7 +35,7 @@ export function ViewModeSelector() {
         onClick={() => handleViewChange('list')}
         className={`flex items-center justify-center p-2.5 rounded-xl font-medium text-sm transition-all duration-200 ${
           currentView === 'list'
-            ? 'bg-blue-500 text-white shadow-md'
+            ? 'bg-indigo-600 text-white shadow-md'
             : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
         }`}
         aria-label="List view"
