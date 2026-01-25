@@ -2,12 +2,7 @@ import { getPokemonList, searchPokemon } from '@/lib/pokeapi';
 import PokemonCard from '@/components/PokemonCard';
 import { cookies } from 'next/headers';
 import { getLanguage, translations } from '@/lib/i18n';
-import LanguageSelector from '@/components/LanguageSelector';
 import Pagination from '@/components/Pagination';
-import { SearchBar } from '@/components/SearchBar';
-import { TypeFilter } from '@/components/TypeFilter';
-import { RegionFilter } from '@/components/RegionFilter';
-import ThemeSelector from '@/components/ThemeSelector';
 import { ViewModeSelector, ViewMode } from '@/components/ViewModeSelector';
 import PokemonListItem from '@/components/PokemonListItem';
 
@@ -41,35 +36,10 @@ export default async function Home({
 
   return (
     <div className="space-y-8">
-      {/* Header */}
-      <header className="flex flex-col gap-8 mb-12">
-        <div className="flex items-center justify-between w-full">
-          <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100 transition-colors duration-200 tracking-tight">{t.pokedex}</h1>
-          <div className="flex items-center gap-3">
-            <ThemeSelector />
-            <LanguageSelector currentLang={lang} />
-          </div>
-        </div>
-        
-        <div className="flex flex-col gap-4 w-full">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 w-full h-full items-start">
-            <div className="w-full md:col-span-2">
-              <SearchBar placeholder={t.searchPlaceholder} />
-            </div>
-            <div className="w-full md:col-span-1">
-              <TypeFilter lang={lang} />
-            </div>
-            <div className="w-full md:col-span-1">
-              <RegionFilter lang={lang} />
-            </div>
-          </div>
-          
-          {/* View Mode Selector */}
-          <div className="flex justify-end">
-            <ViewModeSelector />
-          </div>
-        </div>
-      </header>
+      {/* View Mode Selector */}
+      <div className="flex justify-end">
+        <ViewModeSelector />
+      </div>
 
       {pokemonList.length > 0 ? (
         <>
