@@ -1,6 +1,6 @@
-# MBS Pokédex 🎮
+# MDEVIA Pokédex 🎮
 
-MBS Pokédex es una aplicación web moderna y elegante construida con **Next.js** que permite a los usuarios explorar el vasto mundo de Pokémon de una manera intuitiva y visualmente atractiva.
+MDEVIA Pokédex es una aplicación web moderna y elegante construida con **Next.js** que permite a los usuarios explorar el vasto mundo de Pokémon de una manera intuitiva y visualmente atractiva.
 
 Esta aplicación ha sido diseñada con una estética "Master Edition", priorizando la claridad, el diseño basado en tarjetas y una experiencia de usuario fluida.
 

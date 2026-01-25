@@ -1,6 +1,6 @@
 export default function Loading() {
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="fixed inset-0 z-40 flex items-center justify-center" style={{ paddingTop: '11rem', paddingBottom: '2.5rem' }}>
       <div className="relative w-16 h-16 animate-spin">
         {/* Pokéball structure */}
         <div className="absolute inset-0 rounded-full overflow-hidden border-4 border-gray-900 dark:border-gray-100">

@@ -10,8 +10,6 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { getLanguage, translations } from '@/lib/i18n';
-import LanguageSelector from '@/components/LanguageSelector';
-import ThemeSelector from '@/components/ThemeSelector';
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   const { id } = await params;
@@ -68,10 +66,6 @@ export default async function PokemonDetail({
           <ChevronLeft size={20} />
           {t.backToPokedex}
         </Link>
-        <div className="flex items-center gap-3">
-          <ThemeSelector />
-          <LanguageSelector currentLang={lang} />
-        </div>
       </div>
 
       {/* Header Card */}
