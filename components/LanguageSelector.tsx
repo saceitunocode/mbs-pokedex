@@ -11,7 +11,7 @@ export default function LanguageSelector({ currentLang }: LanguageSelectorProps)
   const router = useRouter();
 
   const toggleLanguage = (lang: Language) => {
-    // Set cookie
+    // Set language preference cookie (1 year expiry)
     document.cookie = `lang=${lang}; path=/; max-age=31536000`; // 1 year
     router.refresh();
   };

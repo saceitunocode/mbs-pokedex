@@ -19,7 +19,7 @@ export function SearchBar({ placeholder }: SearchBarProps) {
     const timer = setTimeout(() => {
       const currentParam = searchParams.get('q') || '';
       
-      // Solo navegar si el valor ha cambiado realmente respecto a la URL actual
+      // Only navigate if the value has actually changed from the current URL
       if (value === currentParam) {
         return;
       }

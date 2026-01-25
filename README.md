@@ -8,91 +8,96 @@ Esta aplicación ha sido diseñada con una estética "Master Edition", priorizan
 
 - **Cuadrícula de Pokémon**: Visualiza los Pokémon en una cuadrícula organizada de 3x10 por página.
 - **Paginación Inteligente**: Navega fácilmente a través de toda la lista de Pokémon.
+- **Búsqueda y Filtros**: Filtra Pokémon por nombre, tipo y región.
+- **Selector de Tema**: Cambia entre modo claro y oscuro.
+- **Internacionalización**: Soporte para Español e Inglés.
 - **Detalles Completos**: Cada Pokémon tiene su propia página dedicada que incluye:
-  - Información técnica (ID, Altura, Peso).
   - Tipos con colores representativos.
   - Estadísticas base detalladas.
   - **Línea Evolutiva**: Visualización gráfica de la cadena de evolución del Pokémon.
 - **Diseño Premium**: Interfaz limpia, responsiva y optimizada para una lectura agradable.
 - **Consumo de API**: Datos obtenidos en tiempo real desde la [PokéAPI](https://pokeapi.co/).
 
-## 🛠️ Tecnologías Utilizadas
+## 🛠️ Stack Tecnológico
 
-- **Sustrato core**: [Next.js 15+](https://nextjs.org/) (App Router)
-- **Lógica de UI**: [React 19](https://react.dev/)
-- **Estilos**: [Tailwind CSS 4](https://tailwindcss.com/)
-- **Iconografía**: [Lucide React](https://lucide.dev/)
-- **Lenguaje**: [TypeScript](https://www.typescriptlang.org/)
+| Tecnología | Versión / Notas |
+| :--- | :--- |
+| [Next.js](https://nextjs.org/) | v16.1.4 (App Router) |
+| [React](https://react.dev/) | v19.2.3 |
+| [TypeScript](https://www.typescriptlang.org/) | v5+ (Strict Mode) |
+| [Tailwind CSS](https://tailwindcss.com/) | v4 |
+| [Vitest](https://vitest.dev/) | Testing framework |
+| [Lucide React](https://lucide.dev/) | Iconos |
+| pnpm | Package manager |
 
 ## 🚀 Cómo Empezar
 
-Para ejecutar este proyecto de forma local, sigue estos pasos:
-
 ### Pre-requisitos
 
-Asegúrate de tener instalado [Node.js](https://nodejs.org/) (versión 18 o superior).
+- [Node.js](https://nodejs.org/) (versión 18 o superior)
+- [pnpm](https://pnpm.io/) (recomendado)
 
 ### Instalación
 
-1. Clona el repositorio:
-   ```bash
-   git clone <url-del-repositorio>
-   cd mbs-pokedex
-   ```
+```bash
+# Clonar el repositorio
+git clone <url-del-repositorio>
+cd mdevia-pokedex
 
-2. Instala pnpm (si no lo tienes):
-   ```bash
-   npm install -g pnpm
-   ```
+# Instalar pnpm (si no lo tienes)
+npm install -g pnpm
 
-3. Instala las dependencias:
-   ```bash
-   pnpm install
-   ```
+# Instalar dependencias
+pnpm install
 
-4. Inicia el servidor de desarrollo:
-   ```bash
-   pnpm dev
-   ```
+# Iniciar servidor de desarrollo
+pnpm dev
+```
 
-5. Abre tu navegador en [http://localhost:3000](http://localhost:3000) para ver el resultado.
+Abre tu navegador en [http://localhost:3000](http://localhost:3000) para ver el resultado.
 
-## � Scripts Disponibles
+## 📜 Scripts Disponibles
 
-En el directorio del proyecto, puedes ejecutar:
-
-- `pnpm dev`: Inicia la aplicación en modo de desarrollo.\
-  Abre [http://localhost:3000](http://localhost:3000) para verlo en el navegador.
-
-- `pnpm build`: Construye la aplicación para producción.\
-  Optimiza el rendimiento para el despliegue.
-
-- `pnpm start`: Inicia un servidor de producción Next.js.\
-  Generalmente se usa después de ejecutar `pnpm build`.
-
-- `pnpm lint`: Ejecuta el linter (ESLint) para encontrar y arreglar problemas en el código.
-
-- `pnpm test`: Ejecuta los tests unitarios utilizando Vitest.
+| Comando | Descripción |
+| :--- | :--- |
+| `pnpm dev` | Inicia el servidor de desarrollo |
+| `pnpm build` | Construye la aplicación para producción |
+| `pnpm start` | Inicia el servidor de producción |
+| `pnpm lint` | Ejecuta ESLint para verificar el código |
+| `pnpm test` | Ejecuta los tests con Vitest |
 
 ## 📁 Estructura del Proyecto
 
-Una visión general de la estructura de directorios principal:
+```text
+/
+├── app/                    # Rutas App Router
+│   ├── [id]/               # Página de detalle
+│   ├── layout.tsx          # Layout raíz
+│   ├── page.tsx            # Página principal
+│   └── globals.css         # Estilos globales
+├── components/             # Componentes reutilizables
+│   ├── PokemonCard.tsx     # Tarjeta de Pokémon
+│   ├── SearchBar.tsx       # Barra de búsqueda
+│   ├── TypeFilter.tsx      # Filtro por tipo
+│   └── ...                 # Otros componentes
+├── lib/                    # Lógica de negocio
+│   ├── pokeapi.ts          # Cliente de PokéAPI
+│   ├── types.ts            # Interfaces TypeScript
+│   ├── i18n.ts             # Internacionalización
+│   └── utils.ts            # Funciones auxiliares
+├── test/                   # Tests
+├── public/                 # Assets estáticos
+├── AGENTS.md               # Instrucciones para agentes de IA
+└── README.md               # Este archivo
+```
 
-- `app/`: Directorio principal de la aplicación (Next.js App Router).
-  - `layout.tsx`: Layout raíz de la aplicación.
-  - `page.tsx`: Página principal (Home).
-  - `globals.css`: Estilos globales y configuración de Tailwind.
-- `components/`: Biblioteca de componentes de UI reutilizables.
-  - `PokemonCard.tsx`: Tarjeta de visualización individual de Pokémon.
-  - `PokemonStats.tsx`: Componente para gráficos de estadísticas.
-  - `ThemeSelector.tsx`: Selector de tema claro/oscuro.
-  - ...y otros componentes modulares.
-- `lib/`: Lógica de negocio y utilidades.
-  - `api.ts`: Cliente y funciones para interactuar con la PokéAPI.
-  - `utils.ts`: Funciones auxiliares generales.
-- `public/`: Archivos estáticos públicos (imágenes, fuentes, iconos).
-- `test/`: Configuración y utilidades para pruebas.
-- `eslint.config.mjs`: Configuración de reglas de linting.
-- `vitest.config.ts`: Configuración del runner de pruebas Vitest.
-- `tailwind.config.js`: Configuración personalizada de Tailwind CSS.
+## 🤖 Para Desarrolladores (IA)
 
+Este proyecto incluye un archivo `AGENTS.md` con instrucciones detalladas para agentes de IA, incluyendo:
+- Principios SOLID aplicados a React
+- Patrones de testing
+- Convenciones de código
+
+## 📄 Licencia
+
+Este proyecto es de uso educativo.

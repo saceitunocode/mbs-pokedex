@@ -106,7 +106,7 @@ export function TypeFilter({ lang }: { lang: Language }) {
                       ${isActive ? 'bg-blue-50/50 dark:bg-blue-900/20' : 'hover:bg-gray-50 dark:hover:bg-gray-700/50'}`}
                   >
                     <div className={`relative w-5 h-5 rounded-lg border-2 transition-all flex items-center justify-center
-                      ${isActive ? 'bg-blue-500 border-blue-500' : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 group-hover/item:border-gray-300 dark:group-hover/item:border-gray-600'}`}>
+                      ${isActive ? 'bg-indigo-600 border-indigo-600' : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 group-hover/item:border-gray-300 dark:group-hover/item:border-gray-600'}`}>
                       {isActive && (
                         <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="4">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
@@ -119,7 +119,7 @@ export function TypeFilter({ lang }: { lang: Language }) {
                     </span>
                     
                     {isActive && (
-                      <span className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-500" />
+                      <span className="ml-auto w-1.5 h-1.5 rounded-full bg-indigo-600" />
                     )}
                   </button>
                 );
